@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        window.onload=function(){
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:8000/api/getplist/",
+                dataType: "json",
+                success: function(result){
+                    var trTD = "";//定义用于拼接的字符串
+                    var obj;
+                    //判断是否是json格式
+                    if((typeof result=='object')&&result.constructor==Object){
+                        obj=result;
+                        console.log("result is object")
+                    }else{
+                        obj  = eval("("+result+")");
+                    }
+                    console.log(obj.message);
+                    {#var obj = obj.data;#}
+                    console.log(obj.data());
+                    for(i=0;i<obj.length ;i++){
+                        var trTD = "<tr><td>"+obj[i].id+"</td><td>"+obj[i].question_text+"</td></tr>";
+                        $("#tab").append(trTD);
+                    }
+                },
+                error: function(){
+                    alert("失败了");
+                }
+            });
+        };
+    </script>
+    </script>
+
+</head>
+
+<body>
+<table border="1px" id="tab">
+    <tr>
+        <td>ID</td>
+        <td>投票内容</td>
+        <td>参与投票</td>
+    </tr>
+</table>
+</body>
+
+</html>

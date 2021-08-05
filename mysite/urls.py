@@ -18,7 +18,8 @@ from django.urls import path, include
 #实例文档缺少import include 访问http://127.0.0.1:8080/polls/
 
 urlpatterns = [
-    path('polls/',include('polls.urls')),
+    path('polls/', include( 'app.polls.urls' ) ),
     path('admin/', admin.site.urls),
-    path('pollsajax/',include('pollsajax.urls')),
+    path('pollsajax/', include( 'app.pollsajax.urls' ) ),
+    path('api/', include( 'app.api.urls' ) ),#分流
 ]
