@@ -1,6 +1,8 @@
 import base64
 import json
 import  os
+from random import randint
+
 from django.http import JsonResponse, HttpResponse, FileResponse, QueryDict
 # Create your views here.
 from django.conf import settings
@@ -259,3 +261,32 @@ def user_data(request):
             return JsonResponse({"code": 10200, "message": "session func is error!"})
     if request.method == "POST":
         return JsonResponse({"code": 10101,  "message": "request method error!"})
+
+def get_activity_id():
+    return {"code": 10200, "data": {"activity_id": 1, "name": "618抽奖活动"}, "message": "success"}
+def get_user_id():
+    return {"code": 10200, "data": {"id": 1, "name": "张三"}, "message": "success"}
+
+def activity_id(request):
+    if request.method == "POST":
+        activity_data = get_activity_id()
+        activity_id = activity_data['data']["activity_id"]
+        # print(type(activity_data),activity_id)
+        user_id =  get_user_id()['data']["id"]
+        print(activity_id,user_id)
+        if activity_id is None or user_id is None:
+            return JsonResponse({"code": 10102,  "message": "username or password is None!"})
+
+        elif activity_id == "" or user_id == "":
+            return JsonResponse({"code": 10103,  "message": "username or password is null!"})
+
+        if int(activity_id) != 1:
+            return JsonResponse({"code": 10104,  "message": "activity id exist!"})
+
+        if int(user_id) != 1:
+            return JsonResponse({"code": 10105,  "message": "user id not exist"})
+
+        number = randint(10000, 99999)
+        return JsonResponse({"code": 10105,  "message": "Lucky draw number is {}".format(number) })
+    else:
+        return JsonResponse({"code": 10101,  "message": "request method error"})
