@@ -30,4 +30,6 @@ urlpatterns = [
     path('upload/',views.upload),
     path('upload_file/',views.upload_file),
     url(r'^download/',views.download,name="download"),
+    path('phone/<int:phoneid>/', views.phone),
+
 ]

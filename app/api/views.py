@@ -194,3 +194,27 @@ def download(request):
         return response
     else:
         return JsonResponse({"code": 10101,  "message": "request method error!"})
+
+def phone(request,phoneid):
+    print(phoneid)
+    if request.method == "GET":
+        if len(str(phoneid)) > 0:
+            return  JsonResponse({"code": 10201, "message": "get success","data": {"id": phoneid, "name": "小米手机", "price": 1999}})
+        elif len == None or len == 'null':
+            return  JsonResponse({"code": 10101, "message": "The phone id is empty"})
+    elif request.method == "PUT":
+        if len(str(phoneid)) > 0:
+            data = json.loads(request.body)
+            name = data.get("name", "")
+            price = data.get("price", "")
+            print(name,price)
+            return  JsonResponse({"code": 10201, "message": "update success","data": {"id": phoneid, "name": "小米手机", "price": 3999}})
+        elif len == None or len == 'null':
+            return  JsonResponse({"code": 10101, "message": "The phone id is empty"})
+    elif request.method == 'DELETE':
+        if len(str(phoneid)) > 0:
+            return  JsonResponse({"code": 10203, "message": "delete success"})
+        elif len == None or len == 'null':
+            return  JsonResponse({"code": 10103, "message": "The deleted phone id is empty"})
+    else:
+        return JsonResponse({"code": 10101,  "message": "request method error!"})
