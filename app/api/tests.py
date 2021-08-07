@@ -138,6 +138,18 @@ class ApiTest:
         result2 = r2.json()
         print(result2)
 
+    @get_funcname('true')
+    def test_activity_id_hasdata(self,path):
+        data = {"aid": 1, "uid": 1}
+        r = requests.post(self.baseurl+path, data=data)
+        result = r.json()
+        print(result)
+
+    def test_activity_id_notdata(self,path):
+        r = requests.post(self.baseurl+path)
+        result = r.json()
+        print(result)
+
 if __name__ == "__main__":
     testload = ApiTest()
     # testload.test_index("aa")
@@ -153,4 +165,6 @@ if __name__ == "__main__":
     # testload.test_upload("download/")
     # testload.test_phone_get("phone/1/")
     # testload.test_phone_put("phone/1/")
-    testload.test_user_login_session("user_login/")
+    # testload.test_user_login_session("user_login/")
+    testload.test_activity_id_hasdata("activity_id/")
+    testload.test_activity_id_notdata("activity_id/")

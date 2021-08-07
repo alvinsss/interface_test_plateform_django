@@ -269,10 +269,14 @@ def get_user_id():
 
 def activity_id(request):
     if request.method == "POST":
-        activity_data = get_activity_id()
-        activity_id = activity_data['data']["activity_id"]
-        # print(type(activity_data),activity_id)
-        user_id =  get_user_id()['data']["id"]
+        # 如果body不传参 取自定义函数的数据
+        if (len(request.body)) > 0:
+            data = QueryDict(request.body)
+            activity_id = data.get("aid","")
+            user_id = data.get("uid","")
+        else:
+            activity_id = get_activity_id()['data']["activity_id"]
+            user_id =  get_user_id()['data']["id"]
         print(activity_id,user_id)
         if activity_id is None or user_id is None:
             return JsonResponse({"code": 10102,  "message": "username or password is None!"})
