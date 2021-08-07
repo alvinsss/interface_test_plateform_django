@@ -13,6 +13,12 @@ def index(request):
 class Number:
     n = 0
 
+class Session_Info:
+    ssession =[]
+    def set_session(self,v):
+        self.ssession.append(v)
+    def get_session(self):
+        return  self.ssession[-1]
 #每次请求数字加1
 def add_one(requset):
     print(requset)
@@ -224,12 +230,32 @@ def phone(request,phoneid):
 
 def user_login(request):
     if request.method == "POST":
-        data = json.loads(request.body)
+        #  requests.Session()请求处理request.body需要使用QueryDict
+        data = (QueryDict(request.body))
         username = data.get("username","")
         password = data.get("password","")
         if (username == "jack" and password == "123"):
+            # s =Session_Info()
+            # s.set_session(username)
+            # 视图的任何地方读写request.session属性，或者多次编辑使用它
+            request.session['username']=username
             return JsonResponse({"code": 10200, "message": "login success"})
         else:
             return JsonResponse({"code": 10104, "message": "username or password error"})
+    else :
+        return JsonResponse({"code": 10101,  "message": "request method error!"})
+
+def user_data(request):
     if request.method == "GET":
+        # s = Session_Info()
+        # print(s.get_session())
+        # if (s.get_session()) != None:
+            # username = s.get_session()
+        print(request.session['username'])
+        username = request.session['username']
+        if username in request.session['username']:
+            return JsonResponse({"code": 10200, "message": "hello, {}".format(username)})
+        else:
+            return JsonResponse({"code": 10200, "message": "session func is error!"})
+    if request.method == "POST":
         return JsonResponse({"code": 10101,  "message": "request method error!"})

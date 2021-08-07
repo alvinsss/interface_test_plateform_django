@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^download/',views.download,name="download"),
     path('phone/<int:phoneid>/', views.phone),
     path('user_login/',views.user_login),
+    path('user_data/',views.user_data),
+
 ]

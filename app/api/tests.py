@@ -120,6 +120,24 @@ class ApiTest:
         result = r.json()
         print(result)
 
+    @get_funcname('true')
+    def test_phone_delete(self,path):
+        print(self.baseurl+path)
+        r = requests.delete(self.baseurl+path )
+        result = r.json()
+        print(result)
+
+    @get_funcname('true')
+    def test_user_login_session(self,path):
+        s = requests.Session()
+        r = s.post(self.baseurl+path, data={"username": "jack", "password": "123"})
+        result = r.json()
+        print(result)
+
+        r2 = s.get("http://127.0.0.1:8000/api/user_data/")
+        result2 = r2.json()
+        print(result2)
+
 if __name__ == "__main__":
     testload = ApiTest()
     # testload.test_index("aa")
@@ -134,4 +152,5 @@ if __name__ == "__main__":
     # testload.test_upload("upload_file/")
     # testload.test_upload("download/")
     # testload.test_phone_get("phone/1/")
-    testload.test_phone_put("phone/1/")
+    # testload.test_phone_put("phone/1/")
+    testload.test_user_login_session("user_login/")
