@@ -31,5 +31,5 @@ urlpatterns = [
     path('upload_file/',views.upload_file),
     url(r'^download/',views.download,name="download"),
     path('phone/<int:phoneid>/', views.phone),
-
+    path('user_login/',views.user_login),
 ]

@@ -1,7 +1,7 @@
 import base64
 import json
 import  os
-from django.http import JsonResponse, HttpResponse, FileResponse
+from django.http import JsonResponse, HttpResponse, FileResponse, QueryDict
 # Create your views here.
 from django.conf import settings
 from werkzeug.utils import secure_filename
@@ -204,7 +204,10 @@ def phone(request,phoneid):
             return  JsonResponse({"code": 10101, "message": "The phone id is empty"})
     elif request.method == "PUT":
         if len(str(phoneid)) > 0:
-            data = json.loads(request.body)
+            print(request.body)
+            # Django对于PUT/DELETE请求并没有像POST/GET那样有一个字典结
+            # 构。我们需要手动处理request.body获取参数, 如果使用postman的Body->raw-json可以使用 json.loads处理
+            data = QueryDict(request.body)
             name = data.get("name", "")
             price = data.get("price", "")
             print(name,price)
@@ -217,4 +220,16 @@ def phone(request,phoneid):
         elif len == None or len == 'null':
             return  JsonResponse({"code": 10103, "message": "The deleted phone id is empty"})
     else:
+        return JsonResponse({"code": 10101,  "message": "request method error!"})
+
+def user_login(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        username = data.get("username","")
+        password = data.get("password","")
+        if (username == "jack" and password == "123"):
+            return JsonResponse({"code": 10200, "message": "login success"})
+        else:
+            return JsonResponse({"code": 10104, "message": "username or password error"})
+    if request.method == "GET":
         return JsonResponse({"code": 10101,  "message": "request method error!"})
