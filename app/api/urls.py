@@ -33,5 +33,6 @@ urlpatterns = [
     path('phone/<int:phoneid>/', views.phone),
     path('user_login/',views.user_login),
     path('user_data/',views.user_data),
+    path('activity_id/',views.activity_id),
 
 ]

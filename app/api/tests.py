@@ -83,7 +83,7 @@ class ApiTest:
 
     @get_funcname('true')
     def test_auth(self,path):
-        auth = ("admin", "admin123")
+        auth = ("admin", "admin123456")
         r = requests.post(self.baseurl+path, auth=auth)
         result = r.json()
         print(result)
@@ -160,11 +160,11 @@ if __name__ == "__main__":
     # testload.test_login_from("login/")
     # testload.test_add_user_json("add_user/")
     # testload.test_getheaders("header/")
-    # testload.test_getheaders("auth/")
+    testload.test_auth("auth/")
     # testload.test_upload("upload_file/")
     # testload.test_upload("download/")
     # testload.test_phone_get("phone/1/")
     # testload.test_phone_put("phone/1/")
     # testload.test_user_login_session("user_login/")
-    testload.test_activity_id_hasdata("activity_id/")
-    testload.test_activity_id_notdata("activity_id/")
+    # testload.test_activity_id_hasdata("activity_id/")
+    # testload.test_activity_id_notdata("activity_id/")

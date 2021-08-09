@@ -138,24 +138,28 @@ def header(request):
 def auth(request):
     if request.method == 'POST':
         auth = request.headers.get("Authorization", '')
-        auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+        # auth_header = request.META.get('HTTP_AUTHORIZATION', '')
         # print(request.META)
-        print(auth,auth_header)
-        return JsonResponse({"code": 10101, "message": "Authorization null"})
-        # if auth is None:
-        #     return JsonResponse(10101, "Authorization None")
-        # else:
-        #     auth = auth.split()
-        #     auth_parts = base64.b64decode(auth[1]).decode('utf-8').partition(':')
-        #     userid, password = auth_parts[0], auth_parts[2]
-        #     if userid == "" or password == "":
-        #         return JsonResponse(10102, "Authorization null")
-        #     if userid == "admin" and password == "admin123":
-        #         return JsonResponse(10200, "Authorization success!")
-        #     else:
-        #         return JsonResponse(10103, "Authorization fail!")
+        # return JsonResponse({"code": 10101, "message": "Authorization null"})
+        if auth is None:
+            return JsonResponse({"code": 10101, "message": "Authorization None"})
+        else:
+            #获取到数据格式和类型  Basic YWRtaW46YWRtaW4xMjM0NTY= <class 'str'>
+            # split操作之后是列表，对第2个元素处理auth[1]
+            auth = auth.split()
+            #  admin:admin123456
+            auth_parts = base64.b64decode(auth[1]).decode('utf-8').partition(':')
+            print(type(auth_parts),auth_parts)
+            userid, password = auth_parts[0], auth_parts[2]
+            if userid == "" or password == "":
+                return JsonResponse({"code": 10102, "message": "Authorization null"})
+            if userid == "admin" and password == "admin123456":
+                return JsonResponse({"code": 10200, "message": "Authorization success!"})
+            else:
+                return JsonResponse({"code": 10103, "message": "Authorization fail!"})
     else:
-        return JsonResponse({10101, "request get  method error"})
+        return JsonResponse({"code": 10101,"message": "request get  method error"})
+
 
 def upload(request):
     if request.method == "POST":    # 请求方法为POST时，进行处理
