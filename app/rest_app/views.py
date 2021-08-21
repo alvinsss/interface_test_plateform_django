@@ -14,7 +14,7 @@ class UserView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        查询
+        查询 uid有值查单条 没值查询全部数据
         """
         uid = kwargs.get("uid", "")
         if uid is not None:

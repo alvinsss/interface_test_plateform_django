@@ -35,7 +35,7 @@ urlpatterns = [
     path('polls/', include( 'app.polls.urls' ) ),
     path('admin/', admin.site.urls),
     path('pollsajax/', include( 'app.pollsajax.urls' ) ),
-    path('api/', include( 'app.rest_app.urls' ) ),#分流
+    path('api/', include( 'app.api.urls' ) ),#分流
     path('rest_app/', include( 'app.rest_app.urls' ) ),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
