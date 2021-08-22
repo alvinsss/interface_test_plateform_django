@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ApiConfig(AppConfig):
+class RestAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app.api'
+    name = 'mysite_dir.app_test.rest_app'

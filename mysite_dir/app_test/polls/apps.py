@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RestAppConfig(AppConfig):
+class PollsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app.rest_app'
+    name = 'mysite_dir.app_test.polls'

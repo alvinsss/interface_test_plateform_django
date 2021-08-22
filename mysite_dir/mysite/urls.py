@@ -32,11 +32,10 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('polls/', include( 'app.polls.urls' ) ),
+    path('polls/', include( 'mysite_dir.app_test.polls.urls' ) ),
     path('admin/', admin.site.urls),
-    path('pollsajax/', include( 'app.pollsajax.urls' ) ),
-    path('api/', include( 'app.api.urls' ) ),#分流
-    path('rest_app/', include( 'app.rest_app.urls' ) ),
+    path('api/', include( 'mysite_dir.app_test.api.urls' ) ),#分流
+    path('rest_app/', include( 'mysite_dir.app_test.rest_app.urls' ) ),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

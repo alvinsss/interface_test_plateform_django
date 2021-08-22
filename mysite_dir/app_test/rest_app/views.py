@@ -3,11 +3,11 @@ from django.http import  JsonResponse
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.views import  APIView
-from app.rest_app.serializer import UserSerializer
-from app.rest_app.common import response,Error
+from app_test.rest_app.serializer import UserSerializer
+from app_test.rest_app.common import response,Error
 
 def index(request):
-
+    print("rest_app index!")
     return JsonResponse( {"msg":"it works!"})
 
 class UserView(APIView):
