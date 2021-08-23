@@ -7,6 +7,7 @@
 from django.shortcuts import render
 from rest_framework.views import  APIView
 from django.http import JsonResponse
+from app_api.serializer.project import ProjectValidator
 
 def index(request):
     print("rest_app index!")
@@ -23,7 +24,17 @@ class ProjectView(APIView):
         """
         添加
         """
-        return JsonResponse( {"msg":"it works!"})
+        name = request.data.get("name","")
+        print(request.data)
+        val = ProjectValidator(data=request.data)
+        print(val)
+        if val.is_valid():
+            val.save()
+        else:
+            print(val.errors)
+            return JsonResponse({"msg":"添加","error":val.errors})
+        return JsonResponse( {"msg":"post works!"})
+
     def put(self, request, *args, **kwargs):
         """
         更新
