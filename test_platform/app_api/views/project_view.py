@@ -79,5 +79,16 @@ class ProjectView(APIView):
         """
         删除
         """
-        return JsonResponse( {"msg":"it works!"})
+        pid = kwargs.get("pid")
+        if pid is not None:#从url获取到pid的话 查询指定pid数据
+            try:
+                project=Project.objects.filter(pk=pid,is_delete=False).update(is_delete=True)
+                print("project",project)
+                if 0 == project:
+                    return JsonResponse( {"msg":"delete project is error!"})
+            except Project.DoesNotExist:
+                return JsonResponse( {"pid":"Project pid is Null"})
+            return JsonResponse( {"msg":"delete project is ok!"})
+        else:
+            return JsonResponse( {"pid":" pid is Null"})
 
