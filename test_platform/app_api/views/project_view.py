@@ -7,12 +7,13 @@
 from django.shortcuts import render
 from rest_framework.views import  APIView
 from django.http import JsonResponse
+from app_common.utils.pagination import Pagination
 from app_api.serializer.project import ProjectValidator,ProjectSerializer
 from app_api.models.project_model import Project
 
 def index(request):
-    print("rest_app index!")
-    return JsonResponse( {"msg":"it works!"})
+    print(" app index!")
+    return JsonResponse( {"msg":" it works!"})
 
 class ProjectView(APIView):
 
@@ -29,8 +30,13 @@ class ProjectView(APIView):
                 return JsonResponse( {"pid":"Project pid is Null"})
             return JsonResponse( {"msg":"get project is ok!","data":ser.data})
         else:
+            # get的params使用request.GET.get获取，实例 http://127.0.0.1:8000/api/v1/project/?page=2&size=10
+            print("request page is :{}".format(request.GET.get("page","")))
+            print("request size is :{}".format(request.GET.get("size","")))
             project = Project.objects.all()
-            ser = ProjectSerializer(instance=project,many=True)
+            pg = Pagination()
+            page_data=pg.paginate_queryset(queryset=project,request=request,view=self)
+            ser = ProjectSerializer(instance=page_data,many=True)
             return JsonResponse( {"msg":"get project list is ok!","data":ser.data})
 
     def post(self, request, *args, **kwargs):
