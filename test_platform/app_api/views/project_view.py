@@ -7,7 +7,7 @@
 from django.shortcuts import render
 from rest_framework.views import  APIView
 from django.http import JsonResponse
-from app_api.serializer.project import ProjectValidator
+from app_api.serializer.project import ProjectValidator,ProjectSerializer
 from app_api.models.project_model import Project
 
 def index(request):
@@ -20,7 +20,19 @@ class ProjectView(APIView):
         """
         查询 uid有值查单条 没值查询全部数据
         """
-        return JsonResponse( {"msg":"pro test get"})
+        pid = kwargs.get("pid")
+        if pid is not None:#从url获取到pid的话 查询指定pid数据
+            try:
+                project=Project.objects.get(pk=pid)
+                ser = ProjectSerializer(instance=project,many=False)
+            except Project.DoesNotExist:
+                return JsonResponse( {"pid":"Project pid is Null"})
+            return JsonResponse( {"msg":"get project is ok!","data":ser.data})
+        else:
+            project = Project.objects.all()
+            ser = ProjectSerializer(instance=project,many=True)
+            return JsonResponse( {"msg":"get project list is ok!","data":ser.data})
+
     def post(self, request, *args, **kwargs):
         """
         添加
@@ -36,7 +48,7 @@ class ProjectView(APIView):
         else:
             print(val.errors)
             return JsonResponse({"msg":"添加","error":val.errors})
-        return JsonResponse( {"msg":"增加项目成功"})
+        return JsonResponse( {"msg":"增加项目名:{}成功".format(name)})
 
     def put(self, request, *args, **kwargs):
         """

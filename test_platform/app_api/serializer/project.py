@@ -6,6 +6,11 @@
 from rest_framework import serializers
 from app_api.models.project_model import  Project
 
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields =['name','describe','status']
+
 aatype=[1,2,3]
 class ProjectValidator(serializers.Serializer):
     name = serializers.CharField(required=True,
