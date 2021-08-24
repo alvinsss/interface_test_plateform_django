@@ -19,3 +19,14 @@ class ProjectValidator(serializers.Serializer):
         '''创建'''
         project = Project.objects.create(**validated_data)
         return project
+
+    def update(self,instance,validated_data):
+        """
+        instance -更新对象 从数据库查询出来的
+        validated_data -- 更新的数据 从request里面来的
+        """
+        instance.name = validated_data.get("name")
+        instance.describe = validated_data.get("describe")
+        instance.status = validated_data.get("status")
+        instance.save() #这个save也需要使用
+        return  instance

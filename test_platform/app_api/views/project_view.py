@@ -8,6 +8,7 @@ from django.shortcuts import render
 from rest_framework.views import  APIView
 from django.http import JsonResponse
 from app_api.serializer.project import ProjectValidator
+from app_api.models.project_model import Project
 
 def index(request):
     print("rest_app index!")
@@ -35,13 +36,26 @@ class ProjectView(APIView):
         else:
             print(val.errors)
             return JsonResponse({"msg":"添加","error":val.errors})
-        return JsonResponse( {"msg":"post works!"})
+        return JsonResponse( {"msg":"增加项目成功"})
 
     def put(self, request, *args, **kwargs):
         """
         更新
         """
-        return JsonResponse( {"msg":"it works!"})
+        # http://127.0.0.1:8000/api/v1/project/1/ 从url取数据，需要urls定义pid
+        pid = kwargs.get("pid")
+        if pid is None:
+            return JsonResponse( {"pid":"pid is Null"})
+        try:
+            project=Project.objects.get(pk=pid)
+        except Project.DoesNotExist:
+            return JsonResponse( {"pid":"Project pid is Null"})
+        val = ProjectValidator(instance=project,data=request.data)
+        if val.is_valid():#判断验证的字段是否都对
+            val.save() #保存数据  serializer update也需要save
+        else:
+            print(val.errors)
+        return JsonResponse( {"msg":"update project is ok!"})
 
     def delete(self, request, *args, **kwargs):
         """

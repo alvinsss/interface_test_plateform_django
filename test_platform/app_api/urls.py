@@ -13,4 +13,6 @@ app_name = 'app_api'
 urlpatterns = [
     path('',index ),#http://127.0.0.1:8000/api/
     path('v1/project/',ProjectView.as_view()),
+    path('v1/project/<int:pid>/',ProjectView.as_view()),
+
 ]
