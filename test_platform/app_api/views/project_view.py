@@ -24,7 +24,7 @@ class ProjectView(APIView):
         pid = kwargs.get("pid")
         if pid is not None:#从url获取到pid的话 查询指定pid数据
             try:
-                project=Project.objects.get(pk=pid)
+                project=Project.objects.get(pk=pid,is_delete=False)
                 ser = ProjectSerializer(instance=project,many=False)
             except Project.DoesNotExist:
                 return JsonResponse( {"pid":"Project pid is Null"})
@@ -33,7 +33,7 @@ class ProjectView(APIView):
             # get的params使用request.GET.get获取，实例 http://127.0.0.1:8000/api/v1/project/?page=2&size=10
             print("request page is :{}".format(request.GET.get("page","")))
             print("request size is :{}".format(request.GET.get("size","")))
-            project = Project.objects.all()
+            project = Project.objects.filter(is_delete=False)
             pg = Pagination()
             page_data=pg.paginate_queryset(queryset=project,request=request,view=self)
             ser = ProjectSerializer(instance=page_data,many=True)
@@ -65,7 +65,7 @@ class ProjectView(APIView):
         if pid is None:
             return JsonResponse( {"pid":"pid is Null"})
         try:
-            project=Project.objects.get(pk=pid)
+            project=Project.objects.get(pk=pid,is_delete=False)
         except Project.DoesNotExist:
             return JsonResponse( {"pid":"Project pid is Null"})
         val = ProjectValidator(instance=project,data=request.data)
