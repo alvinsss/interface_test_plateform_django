@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2021/8/31 09:43
-# @Author  : alvin
-# @File    : module_view.py
-# @Software: PyCharm
 from rest_framework.response import Response
 
 

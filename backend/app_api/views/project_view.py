@@ -30,8 +30,8 @@ class ProjectView(BaseAPIView):
         if pid is not None:  # get的params使用request.GET.get获取，实例 http://127.0.0.1:8000/api/v1/project/?page=2&size=10
 
             try:
-               project = Project.objects.get(pk=pid, is_delete=False)
-               ser = ProjectSerializer(instance=project, many=False)
+                project = Project.objects.get(pk=pid, is_delete=False)
+                ser = ProjectSerializer(instance=project, many=False)
             except Project.DoesNotExist:
                 # return response(error=Error.PROJECT_OBJECT_NULL)
 
@@ -71,7 +71,7 @@ class ProjectView(BaseAPIView):
             if pid == "":
                 return self.response(error=self.PROJECT_ID_NULL)
         try:
-           project = Project.objects.get(pk=pid, is_delete=False)
+            project = Project.objects.get(pk=pid, is_delete=False)
         except Project.DoesNotExist:
             return self.response(error=self.PROJECT_OBJECT_NULL)
         # 更新
