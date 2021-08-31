@@ -32,8 +32,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'mysite_dir.app_test.polls.apps.PollsConfig', #PollsConfig配置
-    'mysite_dir.app_test.rest_app.apps.RestAppConfig', #PollsajaxConfig配置
+    'test_base_demo.app_test.polls.apps.PollsConfig', #PollsConfig配置
+    'test_base_demo.app_test.rest_app.apps.RestAppConfig', #PollsajaxConfig配置
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mysite_dir.mysite.urls'
+ROOT_URLCONF = 'test_base_demo.mysite.urls'
 
 TEMPLATES = [
     {
